@@ -7,7 +7,7 @@ namespace UnitTestProject1
     [TestClass]
     public class UnitTest1
     {
-        [TestMethod]
+        [TestMethod]//add tests 1
         public void Add_PositiveNumbers_CountOfOne()
         {
             //Arrange
@@ -21,7 +21,7 @@ namespace UnitTestProject1
             //Assert
             Assert.AreEqual(expected, actual);
         }
-        [TestMethod]
+        [TestMethod]//2
         public void Add_PositiveNumbers_CountOfFour()
         {
             //Arrange
@@ -41,7 +41,7 @@ namespace UnitTestProject1
             //Assert
             Assert.AreEqual(expected, actual);
         }
-        [TestMethod]
+        [TestMethod]//3
         public void Add_PositiveNumbers_CapacityOfFour()
         {
             //Arrange
@@ -61,7 +61,7 @@ namespace UnitTestProject1
             //Assert
             Assert.AreEqual(expected, actual);
         }
-        [TestMethod]
+        [TestMethod]//4
         public void Add_PositiveNumbers_CapacityIncreases()
         {
             //Arrange
@@ -83,7 +83,7 @@ namespace UnitTestProject1
             //Assert
             Assert.AreEqual(expected, actual);
         }
-        [TestMethod]
+        [TestMethod]//5
         public void Add_PositiveNumbers_CapacityDoubles()
         {
             //Arrange
@@ -106,8 +106,8 @@ namespace UnitTestProject1
             Assert.AreEqual(expected, actual);
         }
         //Indexer tests
-        //1
-        [TestMethod]
+        
+        [TestMethod]//1
         public void Access_IteminList_ItemCaptured()
         {
             CustomList<int> myList = new CustomList<int>();
@@ -126,7 +126,8 @@ namespace UnitTestProject1
             actual = myList[0];
             Assert.AreEqual(expected, actual);
         }
-        [TestMethod]
+        [TestMethod]//2
+
         public void Access_IteminList_ItemSet()
         {
             //Arrange
@@ -149,7 +150,7 @@ namespace UnitTestProject1
             //Assert
             Assert.AreEqual(expected, actual);
         }
-        [TestMethod]
+        [TestMethod]//3
         public void Access_IteminList_ItemGet()
         {
             //Arrange
@@ -172,7 +173,7 @@ namespace UnitTestProject1
             //Assert
             Assert.AreEqual(expected, actual);
         }
-        [TestMethod]
+        [TestMethod]//4
         [ExpectedException(typeof(IndexOutOfRangeException))]
         public void Index_ExcpetionThrown()
         {
@@ -194,6 +195,29 @@ namespace UnitTestProject1
             myList[0] = 20;
             actual = myList[10];
             
+        }
+        [TestMethod]//5
+        public void ChangeType_IteminList_ToString()
+        {
+            //Arrange
+            CustomList<int> myList = new CustomList<int>();
+            int value1 = 2;
+            int value2 = 4;
+            int value3 = 6;
+            int value4 = 8;
+            int value5 = 0;
+            int expected = 6;
+            int actual;
+            //Act
+            myList.Add(value1);
+            myList.Add(value2);
+            myList.Add(value3);
+            myList.Add(value4);
+            myList.Add(value5);
+            myList[0] = 20;
+            actual = myList[2];
+            //Assert
+            Assert.AreEqual(expected.ToString(), actual.ToString());
         }
     }
 }

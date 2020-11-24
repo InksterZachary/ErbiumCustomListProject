@@ -46,11 +46,6 @@ namespace ErbiumCustomListProj
                 count++;
             }
         }
-        public void Index() //Maybe i should call this in the Add function once finished
-        {
-            //Assign a number value to every item in the list starting at 0 'foreach'
-            //create a get => and set => property for index value 'make them public'
-        }
         public void Remove(int i)
         {
             //return value of accessed index
