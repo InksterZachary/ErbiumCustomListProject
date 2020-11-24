@@ -28,12 +28,12 @@ namespace ErbiumCustomListProj
         }
         public void Add(T valueToAdd)
         {
-            if (count < 4)
+            if (count < capacity)
             {
                 _items[count] = valueToAdd;
                 count++;
             }
-            else if(count >= 4)
+            else if(count == capacity)
             {
                 capacity += capacity;
                 count++;
