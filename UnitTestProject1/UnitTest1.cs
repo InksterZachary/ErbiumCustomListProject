@@ -249,7 +249,6 @@ namespace UnitTestProject1
             int value2 = 2;
             int value3 = 3;
             int value4 = 4;
-            int value5 = 5;
             int expected = 4;
             int actual;
             //Act
@@ -257,13 +256,13 @@ namespace UnitTestProject1
             myList.Add(value2);
             myList.Add(value3);
             myList.Add(value4);
-            myList.Add(value5);
-            myList.Remove(myList[2]);
+            myList.Remove(2);
             actual = myList[2];
             //Assert
             Assert.AreEqual(expected, actual);
         }
         [TestMethod] //test 3
+        [ExpectedException(typeof(IndexOutOfRangeException))]
         public void Remove_ItemInList_ReturnsValue()
         {
             //Arrange
@@ -308,7 +307,7 @@ namespace UnitTestProject1
             Assert.AreEqual(expected, actual);
         }
         [TestMethod] //test 5
-        public void Remove_ItemInList_ItemNull()
+        public void Remove_ItemInList_AbilityToRemoveFirstItem()
         {
             //Arrange
             CustomList<int> myList = new CustomList<int>();
