@@ -219,5 +219,114 @@ namespace UnitTestProject1
             //Assert
             Assert.AreEqual(expected.ToString(), actual.ToString());
         }
+        [TestMethod] //Remove tests test 1
+        public void Remove_ItemInList_CountDecreaseOfOne()
+        {
+            //Arrange
+            CustomList<int> myList = new CustomList<int>();
+            int value1 = 2;
+            int value2 = 2;
+            int value3 = 2;
+            int value4 = 2;
+            int expected = 3;
+            int actual;
+            //Act
+            myList.Add(value1);
+            myList.Add(value2);
+            myList.Add(value3);
+            myList.Add(value4);
+            myList.Remove(value3);
+            actual = myList.Count;
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod] //test 2
+        public void Remove_ItemInList_IndexDecreases()
+        {
+            //Arrange
+            CustomList<int> myList = new CustomList<int>();
+            int value1 = 1;
+            int value2 = 2;
+            int value3 = 3;
+            int value4 = 4;
+            int value5 = 5;
+            int expected = 4;
+            int actual;
+            //Act
+            myList.Add(value1);
+            myList.Add(value2);
+            myList.Add(value3);
+            myList.Add(value4);
+            myList.Add(value5);
+            myList.Remove(myList[2]);
+            actual = myList[2];
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod] //test 3
+        public void Remove_ItemInList_ReturnsValue()
+        {
+            //Arrange
+            CustomList<int> myList = new CustomList<int>();
+            int value1 = 1;
+            int value2 = 2;
+            int value3 = 3;
+            int value4 = 4;
+            int value5 = 5;
+            int expected = 3;
+            int actual;
+            //Act
+            myList.Add(value1);
+            myList.Add(value2);
+            myList.Add(value3);
+            myList.Add(value4);
+            myList.Add(value5);
+            myList.Remove(1);
+            actual = myList[1];
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod] //test 4
+        public void Remove_ItemInList_ItemsMoveUpASlot()
+        {
+            //Arrange
+            CustomList<int> myList = new CustomList<int>();
+            int value1 = 2;
+            int value2 = 4;
+            int value3 = 6;
+            int value4 = 8;
+            int expected = 6;
+            int actual;
+            //Act
+            myList.Add(value1);
+            myList.Add(value2);
+            myList.Add(value3);
+            myList.Add(value4);
+            myList.Remove(myList[1]);
+            actual = myList[1];
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod] //test 5
+        public void Remove_ItemInList_ItemNull()
+        {
+            //Arrange
+            CustomList<int> myList = new CustomList<int>();
+            int value1 = 2;
+            int value2 = 4;
+            int value3 = 6;
+            int value4 = 8;
+            int expected = 4;
+            int actual;
+            //Act
+            myList.Add(value1);
+            myList.Add(value2);
+            myList.Add(value3);
+            myList.Add(value4);
+            myList.Remove(2);
+            actual = myList[0];
+            //Assert
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

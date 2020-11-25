@@ -11,10 +11,8 @@ namespace ErbiumCustomListProj
         T[] _items;
         public T this[int i]
         { 
-            //get & set => return
             get { return _items[i]; }
             set { _items[i] = value; }   
-            //return null if access request is outside of capacity
         }
         private int count;
         public int Count
@@ -46,12 +44,29 @@ namespace ErbiumCustomListProj
                 count++;
             }
         }
-        public void Remove(int i)
+        public bool Remove(T item)
         {
-            //return value of accessed index
-            //remove value from list
-            //count--
-            //if count reaches half of total capacity) capacity -= (capacity/2)
+            for (int i = 0; i < _items.Length; i++)
+            {
+                if (_items[i].Equals(item))
+                {
+                    RemoveAt(i);
+                    return true;
+                }
+                
+            }
+            return false;
         }
+        public T RemoveAt(int index)
+        {
+            T removedItem = _items[index];
+            for (int i = index; i < count - 1; i++)
+            {
+                _items[i] = _items[i + 1];
+            }
+            count--;
+            return removedItem;
+        }
+       
     }
 }
