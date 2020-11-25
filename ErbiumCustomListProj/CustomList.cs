@@ -24,10 +24,35 @@ namespace ErbiumCustomListProj
         {
             get => capacity;
         }
+        
         public static CustomList<T> operator+ (CustomList<T> one, CustomList<T> two)
         {
-            CustomList<T> myList = new CustomList<T>();
-            foreach()
+            CustomList<T> comboList = new CustomList<T>();
+            for (int i = 0,j=0; i < one.count && j < two.count; i++,j++)
+            {
+                comboList.Add(one[i]);
+                comboList.Add(two[j]);
+            }
+            return comboList;
+        }
+        public static CustomList<T> operator- (CustomList<T> one,CustomList<T> two)
+        {
+            CustomList<T> comboList = new CustomList<T>();
+            for(int i = 0; i<one.count; i++)
+            {
+                foreach(int items in two)
+                {
+                    if (one[i] == two.items)
+                        one.Remove(i);
+                }
+            }
+            for (int i=0,j=0; i<one.count && j<two.count; i++,j++)
+            {
+                comboList.Add(one[i]);
+                comboList.Add(two[j]);
+            }
+            
+
         }
         public CustomList()
         {
