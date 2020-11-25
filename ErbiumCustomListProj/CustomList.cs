@@ -10,9 +10,9 @@ namespace ErbiumCustomListProj
     {
         T[] _items;
         public T this[int i]
-        { 
+        {
             get { return _items[i]; }
-            set { _items[i] = value; }   
+            set { _items[i] = value; }
         }
         private int count;
         public int Count
@@ -24,7 +24,11 @@ namespace ErbiumCustomListProj
         {
             get => capacity;
         }
-
+        public static CustomList<T> operator+ (CustomList<T> one, CustomList<T> two)
+        {
+            CustomList<T> myList = new CustomList<T>();
+            foreach()
+        }
         public CustomList()
         {
             count = 0;
@@ -38,7 +42,7 @@ namespace ErbiumCustomListProj
                 _items[count] = valueToAdd;
                 count++;
             }
-            else if(count == capacity)
+            else if (count == capacity)
             {
                 capacity += capacity;
                 count++;
@@ -53,7 +57,7 @@ namespace ErbiumCustomListProj
                     RemoveAt(i);
                     return true;
                 }
-                
+
             }
             return false;
         }
@@ -67,6 +71,12 @@ namespace ErbiumCustomListProj
             count--;
             return removedItem;
         }
-       
+        public override string ToString() //Tried: ForEach, direct item
+        {
+            //I want this method to 
+            //Turn each value in the list of items into a string
+            return _items.ToString();
+        }
+        
     }
 }

@@ -184,7 +184,6 @@ namespace UnitTestProject1
             int value3 = 6;
             int value4 = 8;
             int value5 = 0;
-            int expected = 6;
             int actual;
             //Act
             myList.Add(value1);
