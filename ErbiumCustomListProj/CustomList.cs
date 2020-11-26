@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ErbiumCustomListProj
 {
-    public class CustomList<T>
+    public class CustomList<T> //: IEnumerator<T>
     {
         T[] _items;
         public T this[int i]
@@ -25,34 +25,52 @@ namespace ErbiumCustomListProj
             get => capacity;
         }
         
+        public static CustomList<T> Zip(CustomList<T> one, CustomList<T> two) //Actually I think this is the zipper method so I added the equality check
+        {
+            CustomList<T> comboList = new CustomList<T>();
+            if (one.count == two.count)
+            {
+                for (int i = 0, j = 0; i < one.count && j < two.count; i++, j++)
+                {
+                    comboList.Add(one[i]);
+                    comboList.Add(two[j]);
+                }
+            }
+            return comboList;
+        }
         public static CustomList<T> operator+ (CustomList<T> one, CustomList<T> two)
         {
             CustomList<T> comboList = new CustomList<T>();
-            for (int i = 0,j=0; i < one.count && j < two.count; i++,j++)
+            for (int i = 0; i < one.count; i++)
+            {
+                comboList.Add(one[i]);
+            }
+            for(int j = 0; j < two.count; j++)
+            {
+                comboList.Add(two[j]);
+            }
+            return comboList;
+        }
+        public static CustomList<T> operator- (CustomList<T> one,CustomList<T> two) //Just saw 'distinct<>' maybe useful
+        {
+            CustomList<T> comboList = new CustomList<T>();
+            for (int i = 0; i < one.count; i++)
+            {
+                for (int j = 0; j < two.count; j++)
+                {
+                    if (two[i].Equals(one[i]))
+                    {
+                         one.Remove(one[i]);
+                         two.Remove(two[j]);
+                    }
+                }
+            }
+            for (int i=0,j=0; i < one.count && j < two.count; i++,j++)
             {
                 comboList.Add(one[i]);
                 comboList.Add(two[j]);
             }
             return comboList;
-        }
-        public static CustomList<T> operator- (CustomList<T> one,CustomList<T> two)
-        {
-            CustomList<T> comboList = new CustomList<T>();
-            for(int i = 0; i<one.count; i++)
-            {
-                foreach(int items in two)
-                {
-                    if (one[i] == two.items)
-                        one.Remove(i);
-                }
-            }
-            for (int i=0,j=0; i<one.count && j<two.count; i++,j++)
-            {
-                comboList.Add(one[i]);
-                comboList.Add(two[j]);
-            }
-            
-
         }
         public CustomList()
         {
