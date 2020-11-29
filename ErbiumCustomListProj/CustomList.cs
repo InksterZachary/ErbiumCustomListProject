@@ -71,21 +71,30 @@ namespace ErbiumCustomListProj
         }
         public static CustomList<T> operator- (CustomList<T> one,CustomList<T> two)
         {
+            CustomList<T> oneList = new CustomList<T>();
+            CustomList<T> twoList = new CustomList<T>();
             CustomList<T> comboList = new CustomList<T>();
-            for (int i=0,j=0; i < one.count; i++,j++)
+            for (int i=0; i < one.count; i++)
             {
-                comboList.Add(one[i]);
+                oneList.Add(one[i]);
             }
-            for (int i = 0; i < one.count; i++)
+            for (int i = 0; i < two.count; i++)
             {
-                for (int j = 0; j < two.count; j++)
+                twoList.Add(two[i]);
+            }
+            for (int i = 0; i < oneList.count; i++)
+            {
+                foreach(T item in oneList)
                 {
-                    if (two[i].Equals(one[j]))
+                    if(twoList[i].Equals(item))
                     {
-                        comboList.Remove(two[j]);
+                        oneList.Remove(item);
+                        twoList.Remove(item);
                         break;
                     }
                 }
+                comboList = oneList + twoList;
+                
             }
             return comboList;
         }
