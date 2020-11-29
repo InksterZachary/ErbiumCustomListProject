@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ErbiumCustomListProj
 {
-    public class CustomList<T> //: IEnumerator<T>
+    public class CustomList<T> : IEnumerable<T>
     {
         T[] _items;
         public T this[int i]
@@ -24,7 +24,14 @@ namespace ErbiumCustomListProj
         {
             get => capacity;
         }
-        
+
+        public IEnumerable<T> GetEnumerator(CustomList<T> myList)
+        {
+            for (int i = 0; i < myList.Count; i++)
+            {
+                yield return myList[i];
+            }
+        }
         public static CustomList<T> Zip(CustomList<T> one, CustomList<T> two) //Actually I think this is the zipper method so I added the equality check
         {
             CustomList<T> comboList = new CustomList<T>();
@@ -78,6 +85,10 @@ namespace ErbiumCustomListProj
             capacity = 4;
             _items = new T[capacity];
         }
+        //public IEnumerator<T> GetEnumerator()
+        //{
+        //    return _items.GetEnumerator();
+        //}
         public void Add(T valueToAdd)
         {
             if (count < capacity)
