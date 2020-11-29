@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ErbiumCustomListProj
 {
-    public class CustomList<T> : IEnumerable<T>
+    public class CustomList<T> : IEnumerable
     {
         T[] _items;
         public T this[int i]
@@ -23,24 +24,34 @@ namespace ErbiumCustomListProj
         public int Capacity
         {
             get => capacity;
+            set => capacity = value;
         }
-
-        public IEnumerable<T> GetEnumerator(CustomList<T> myList)
+        public CustomList()
         {
-            for (int i = 0; i < myList.Count; i++)
-            {
-                yield return myList[i];
-            }
+            count = 0;
+            capacity = 4;
+            _items = new T[capacity];
+            
         }
-        public static CustomList<T> Zip(CustomList<T> one, CustomList<T> two) //Actually I think this is the zipper method so I added the equality check
+        public CustomList<T> Zip(CustomList<T> one, CustomList<T> two)
         {
             CustomList<T> comboList = new CustomList<T>();
-            if (one.count == two.count)
-            {
-                for (int i = 0, j = 0; i < one.count && j < two.count; i++, j++)
+            { 
+                for (int i = 0, j = 0; i < one.capacity || j < two.capacity; i++, j++)
                 {
-                    comboList.Add(one[i]);
-                    comboList.Add(two[j]);
+                    if (i < one.capacity && j < two.capacity)
+                    {
+                        comboList.Add(one[i]);
+                        comboList.Add(two[j]);
+                    }
+                    else if(i < one.capacity)
+                    {
+                        comboList.Add(one[i]);
+                    }
+                    else if(j < two.capacity)
+                    {
+                        comboList.Add(two[j]);
+                    }
                 }
             }
             return comboList;
@@ -58,49 +69,50 @@ namespace ErbiumCustomListProj
             }
             return comboList;
         }
-        public static CustomList<T> operator- (CustomList<T> one,CustomList<T> two) //Just saw 'distinct<>' maybe useful
+        public static CustomList<T> operator- (CustomList<T> one,CustomList<T> two)
         {
             CustomList<T> comboList = new CustomList<T>();
+            for (int i=0,j=0; i < one.count; i++,j++)
+            {
+                comboList.Add(one[i]);
+            }
             for (int i = 0; i < one.count; i++)
             {
                 for (int j = 0; j < two.count; j++)
                 {
-                    if (two[i].Equals(one[i]))
+                    if (two[i].Equals(one[j]))
                     {
-                         one.Remove(one[i]);
-                         two.Remove(two[j]);
+                        comboList.Remove(two[j]);
+                        break;
                     }
                 }
             }
-            for (int i=0,j=0; i < one.count && j < two.count; i++,j++)
-            {
-                comboList.Add(one[i]);
-                comboList.Add(two[j]);
-            }
             return comboList;
         }
-        public CustomList()
-        {
-            count = 0;
-            capacity = 4;
-            _items = new T[capacity];
-        }
-        //public IEnumerator<T> GetEnumerator()
-        //{
-        //    return _items.GetEnumerator();
-        //}
+        
         public void Add(T valueToAdd)
         {
-            if (count < capacity)
+            if (count == capacity)
             {
-                _items[count] = valueToAdd;
-                count++;
+                ExtendArray(capacity * 2);
             }
-            else if (count == capacity)
+            _items[count] = valueToAdd;
+            count++;
+        }
+        public void ExtendArray(int num)
+        {
+            T[] largerArray = new T[num];
+            largerArray = CopyArray(largerArray);
+            _items = largerArray;
+            capacity = num;
+        }
+        public T[] CopyArray(T[] array)
+        {
+            for (int i = 0; i < Count; i++)
             {
-                capacity += capacity;
-                count++;
+                array[i] = _items[i];
             }
+            return array;
         }
         public bool Remove(T item)
         {
@@ -125,12 +137,29 @@ namespace ErbiumCustomListProj
             count--;
             return removedItem;
         }
-        public override string ToString() //Tried: ForEach, direct item
+        public override string ToString() 
         {
-            //I want this method to 
-            //Turn each value in the list of items into a string
-            return _items.ToString();
+            string retVal = string.Empty;
+            foreach (T item in this)
+            {
+                if (string.IsNullOrEmpty(retVal))
+                {
+                    retVal += item.ToString();
+                }
+                else
+                {
+                    retVal += string.Format(" {0}", item);
+                }
+            }
+            return retVal;
         }
-        
+
+        public IEnumerator GetEnumerator()
+        {
+            for (int i = 0; i < _items.Length; i++)
+            {
+                yield return _items[i];
+            }
+        }
     }
 }
